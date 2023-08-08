@@ -23,6 +23,7 @@ function Home() {
           , and provided by their Wordnik API
         </p>
       </div>
+      <div><h2>Spotify Name</h2></div>
       <div>
         <button className="song__button">Get Song</button>
       </div>
