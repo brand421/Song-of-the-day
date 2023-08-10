@@ -1,6 +1,6 @@
-require('dotenv').config();
+require("dotenv").config();
 import express from "express";
-import cors from 'cors';
+import cors from "cors";
 import bodyParser from "body-parser";
 
 const app = express();
@@ -11,8 +11,9 @@ app.use(cors());
 const port = process.env.PORT;
 
 const clientId = process.env.SPOTIFY_ID!;
-const spotifySecret = process.env.SPOTIFY_SECRET!;
+const spotifySecret = process.env.SPOTIFY_SECRET;
 const redirectUri = process.env.REDIRECT_URI;
+const endpoint = process.env.SPOTIFY_ENDPOINT;
 const code = undefined;
 
 // if(!code) {
@@ -57,8 +58,25 @@ const code = undefined;
 //         .replace(/=+$/g, '')
 // }
 
-app.post("/")
+app.post("/");
 
+async function searchTracks() {
+  let date = new Date();
+  let today = date.toLocaleDateString();
+  var wotd = await fetch(
+    "https://api.wordnik.com/v4/words.json/wordOfTheDay?" +
+      today +
+      "&api_key=" +
+      wordnikApi
+  );
+  console.log("searching for song based on word");
+}
 
-app.get('/song', (req, res) => res.json({id: `${clientId}`, secret: `${spotifySecret}`}))
-app.listen(port, () => console.log(`App listening on port ${port}!`))
+app.get("/spotify", (req, res) =>
+  res.json({
+    id: `${clientId}`,
+    secret: `${spotifySecret}`,
+    auth: `${endpoint}`
+  })
+);
+app.listen(port, () => console.log(`App listening on port ${port}!`));
