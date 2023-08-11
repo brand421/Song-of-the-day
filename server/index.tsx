@@ -2,81 +2,65 @@ require("dotenv").config();
 import express from "express";
 import cors from "cors";
 import bodyParser from "body-parser";
+import path from "path";
+
+var SpotifyWebApi = require("spotify-web-api-node");
 
 const app = express();
 app.use(bodyParser.urlencoded({ extended: true }));
-app.use(express.static("public"));
+app.use(express.static(path.resolve(__dirname, "../client/build")));
 app.use(cors());
 
 const port = process.env.PORT;
-
-const clientId = process.env.SPOTIFY_ID!;
-const spotifySecret = process.env.SPOTIFY_SECRET;
-const redirectUri = process.env.REDIRECT_URI;
 const endpoint = process.env.SPOTIFY_ENDPOINT;
-const code = undefined;
+const wordnikApi = process.env.WORDNIK_API;
 
-// if(!code) {
-//     redirectToAuthCodeFlow(clientId);
-// } else {
-//     const accessToken = await getAccessToken(clientId, code);
-//     const profile = await fetchProfile(accessToken)
-// }
+app.post("/", (req, res) => {
+  let word: string = req.body;
+  console.log(word);
+  res.json(word);
+});
 
-// async function redirectToAuthCodeFlow(clientId: string) {
-//     const verifier = generateCodeVerifier(128);
-//     const challenge = await generateCodeChallenge(verifier);
+app.get("/", async (req, res) => {
+  let word: string = req.body;
 
-//     localStorage.setItem("verifier", verifier);
+  let spotifyApi = new SpotifyWebApi({
+    clientId: process.env.SPOTIFY_ID,
+    clientSecret: process.env.SPOTIFY_SECRET
+  });
+  spotifyApi
+    .clientCredentialsGrant()
+    .then(async function (data: { body: { [x: string]: string } }) {
+      const accessToken = data.body[""];
+      console.log("the access token is " + data.body["access_token"]);
+      spotifyApi.setAccessToken(data.body["access_token"]);
 
-//     const params = new URLSearchParams();
-//     params.append("client_id", clientId);
-//     params.append("response_type", "code");
-//     params.append("redirectUri", "http://localhost:3000/song");
-//     params.append("scope", "user-read-private user-read-email");
+      return spotifyApi.searchTracks("lie", { limit: 1 });
+    })
+    .then(
+      await function (data: {
+        body: {
+          [x: string]: {
+            [x: string]: {
+              [x: string]: { [x: string]: { [x: string]: any }[] };
+            }[];
+          };
+        };
+      }) {
+        var uriTrack = data.body["tracks"]["items"][0]["name"];
+        var uriArtist = data.body["tracks"]["items"][0]["artists"][0]["name"];
+        var uriCover =
+          data.body["tracks"]["items"][0]["album"]["images"][0]["url"];
+        console.log(
+          uriTrack + " by " + uriArtist + " album cover link: " + uriCover
+        );
 
-//     document.location = `https://accounts.spotify.com/authorize?${params.toString()}`;
-// }
-
-// function generateCodeVerifier(length: number) {
-//     let text = '';
-//     let possible = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';
-
-//     for (let i = 0; i < length; i++) {
-//         text += possible.charAt(Math.floor(Math.random() * possible.length));
-//     }
-
-//     return text;
-// }
-
-// async function generateCodeChallenge(codeVerifier: string) {
-//     const data = new TextEncoder().encode(codeVerifier);
-//     const digest = await window.crypto.subtle.digest('SHA-256', data);
-//     return btoa(String.fromCharCode.apply(null, [...new Uint8Array(digest)]))
-//         .replace(/\+/g, '-')
-//         .replace(/\//g, '_')
-//         .replace(/=+$/g, '')
-// }
-
-app.post("/");
-
-async function searchTracks() {
-  let date = new Date();
-  let today = date.toLocaleDateString();
-  var wotd = await fetch(
-    "https://api.wordnik.com/v4/words.json/wordOfTheDay?" +
-      today +
-      "&api_key=" +
-      wordnikApi
-  );
-  console.log("searching for song based on word");
-}
-
-app.get("/spotify", (req, res) =>
-  res.json({
-    id: `${clientId}`,
-    secret: `${spotifySecret}`,
-    auth: `${endpoint}`
-  })
-);
+        res.json({
+          songName: uriTrack,
+          songArtist: uriArtist,
+          songAlbum: uriCover
+        });
+      }
+    );
+});
 app.listen(port, () => console.log(`App listening on port ${port}!`));
