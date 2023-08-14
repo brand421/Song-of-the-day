@@ -5,7 +5,8 @@ function Home() {
   const [message, setMessage] = useState({
     songName: "",
     songArtist: "",
-    songAlbum: ""
+    songAlbum: "",
+    songLink: ""
   });
 
   const [song, setSong] = useState({
@@ -43,23 +44,14 @@ function Home() {
   return (
     <div className="home__container">
       <div className="title">
-        <h1 className="title__head">SONG OF THE DAY</h1>{" "}
-        {/* <h3 className="subtitle">
-          Get a song based on todays word of the day:
-        </h3>
-        <p className="subscript">
-          *Word of the day comes from{" "}
-          <a href="https://www.wordnik.com" target="noreferrer" rel="">
-            Wordnik
-          </a>
-          , and provided by their Wordnik API
-        </p> */}
+        <h1 className="title__head">SONG OF THE DAY</h1>
       </div>
       <div>
         <form onSubmit={onSubmit}>
-          <label>
+          <label htmlFor="songWord">
             Song name:{" "}
             <input
+              id="songWord"
               name="songWord"
               defaultValue="Submit a word"
               type="text"
@@ -73,15 +65,23 @@ function Home() {
         {/* {!token ? } */}
         <button className="song__button">Get Song</button>
       </div>
-      <div>
-        <h3>{message.songName}</h3>
-        <h3>{message.songArtist}</h3>
-        <img
-          src={message.songAlbum}
-          height={200}
-          width={200}
-          alt="album cover"
-        />
+      <div className="song__info">
+        <h3 className="song__item">{message.songName}</h3>
+        <h5 className="song__item">by</h5>
+        <h4 className="song__item">{message.songArtist}</h4>
+        <a
+          className="song__item"
+          href={message.songLink}
+          target="_blank"
+          rel="noreferrer"
+        >
+          <img
+            src={message.songAlbum}
+            height={200}
+            width={200}
+            alt={`Album cover for ${message.songAlbum}`}
+          />
+        </a>
       </div>
     </div>
   );
