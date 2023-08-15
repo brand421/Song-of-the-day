@@ -6,14 +6,14 @@ function Home() {
     songName: "",
     songArtist: "",
     songAlbum: "",
-    songLink: ""
+    songLink: "",
+    word: "",
+    definition: ""
   });
 
-  // const [song, setSong] = useState({
-  //   word: ""
-  // });
+  let today = new Date().toISOString().substring(0, 10);
 
-  const [input, setInput] = useState("");
+  const [date, setDate] = useState(today);
 
   useEffect(() => {
     fetch("http://localhost:8000/")
@@ -21,13 +21,33 @@ function Home() {
       .then((data) => setMessage(data));
   }, []);
 
-  async function search() {
-    console.log("search for " + input);
-  }
+  // async function handleSubmit(e: any) {
+  //   e.preventDefault();
+  //   const wordnikApi = process.env.WORDNIK_API!;
+  //   try {
+  //     let res = await fetch(
+  //       "https://api.wordnik.com/v4/words.json/wordOfTheDay?api_key=" +
+  //         wordnikApi,
+  //       {
+  //         method: "POST",
+  //         body: JSON.stringify({
+  //           word: word
+  //         })
+  //       }
+  //     );
+  //     let resJson = await res.json();
+  //     if (res.status === 200) {
+  //       setDate("");
+  //     }
+  //   } catch (err) {
+  //     console.log(err);
+  //   }
+  // }
+  // async function search() {
+  //   console.log("search for " + date);
+  // }
 
-  let date = new Date().toISOString().substring(0, 10);
-
-  console.log(date);
+  // console.log(date);
 
   return (
     <div className="home__container">
@@ -35,21 +55,21 @@ function Home() {
         <h1 className="title__head">SONG OF THE DAY</h1>
       </div>
       <div>
-        <form action="/" method="POST">
-          <label htmlFor="date">
+        <h4>Today's word is {message.word}</h4>
+        <h5>Definition: "{message.definition}"</h5>
+        {/* <form onSubmit={handleSubmit}>
+          <label id="date">
             Song name:{" "}
             <input
-              id="date"
               name="date"
               defaultValue={date}
               type="date"
-              onChange={(e) => setInput(e.target.value)}
+              onChange={(e) => setDate(e.target.value)}
+              max={today}
             />
           </label>
-          <button type="submit" onClick={search}>
-            Submit
-          </button>
-        </form>
+          <button type="submit">Submit</button>
+        </form> */}
       </div>
       <div className="song__info">
         <h3 className="song__item">{message.songName}</h3>
