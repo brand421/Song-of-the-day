@@ -59,5 +59,6 @@ app.get("/", (req, res) => {
     .catch((err: any) => {
       console.log(err);
     });
+  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 app.listen(port, () => console.log(`App listening on port ${port}!`));

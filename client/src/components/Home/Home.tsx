@@ -11,65 +11,28 @@ function Home() {
     definition: ""
   });
 
-  let today = new Date().toISOString().substring(0, 10);
-
-  const [date, setDate] = useState(today);
-
   useEffect(() => {
     fetch("http://localhost:8000/")
       .then((res) => res.json())
       .then((data) => setMessage(data));
   }, []);
 
-  // async function handleSubmit(e: any) {
-  //   e.preventDefault();
-  //   const wordnikApi = process.env.WORDNIK_API!;
-  //   try {
-  //     let res = await fetch(
-  //       "https://api.wordnik.com/v4/words.json/wordOfTheDay?api_key=" +
-  //         wordnikApi,
-  //       {
-  //         method: "POST",
-  //         body: JSON.stringify({
-  //           word: word
-  //         })
-  //       }
-  //     );
-  //     let resJson = await res.json();
-  //     if (res.status === 200) {
-  //       setDate("");
-  //     }
-  //   } catch (err) {
-  //     console.log(err);
-  //   }
-  // }
-  // async function search() {
-  //   console.log("search for " + date);
-  // }
-
-  // console.log(date);
-
   return (
     <div className="home__container">
       <div className="title">
-        <h1 className="title__head">SONG OF THE DAY</h1>
+        <h1 className="title__head">
+          Today's word is
+          <a
+            href={`https://www.wordnik.com/words/${message.word}`}
+            target="_blank"
+            rel="noreferrer"
+          >
+            &nbsp;{message.word}
+          </a>
+        </h1>
       </div>
-      <div>
-        <h4>Today's word is {message.word}</h4>
-        <h5>Definition: "{message.definition}"</h5>
-        {/* <form onSubmit={handleSubmit}>
-          <label id="date">
-            Song name:{" "}
-            <input
-              name="date"
-              defaultValue={date}
-              type="date"
-              onChange={(e) => setDate(e.target.value)}
-              max={today}
-            />
-          </label>
-          <button type="submit">Submit</button>
-        </form> */}
+      <div className="word__section">
+        <h4>Definition: "{message.definition}"</h4>
       </div>
       <div className="song__info">
         <h3 className="song__item">{message.songName}</h3>
