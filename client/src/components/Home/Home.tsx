@@ -32,7 +32,7 @@ function Home() {
         </h1>
       </div>
       <div className="word__section">
-        <h4>Definition: "{message.definition}"</h4>
+        <p>Definition: "{message.definition}"</p>
       </div>
       <div className="song__info">
         <h3 className="song__item">{message.songName}</h3>
@@ -51,6 +51,7 @@ function Home() {
             alt={`Album cover for ${message.songAlbum}`}
           />
         </a>
+        <h3>Click on the album cover to open the song in Spotify!</h3>
       </div>
     </div>
   );
