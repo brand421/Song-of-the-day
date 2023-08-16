@@ -18,6 +18,7 @@ app.get("/", (req, res) => {
   let today = new Date().toISOString().substring(0, 10);
   axios
     .get(
+      // Need to use this to get the word of the day and it's definition
       "https://api.wordnik.com/v4/words.json/wordOfTheDay?date=" +
         today +
         "&api_key=" +
@@ -31,7 +32,7 @@ app.get("/", (req, res) => {
         clientSecret: process.env.SPOTIFY_SECRET
       });
       spotifyApi
-        .clientCredentialsGrant() // Using below function to create access token and query Spotify API
+        .clientCredentialsGrant() // Using below function to create access token, query Spotify API, and return song data
         .then(function (data: { body: { [x: string]: string } }) {
           const accessToken = data.body[""];
           spotifyApi.setAccessToken(data.body["access_token"]);
@@ -59,6 +60,5 @@ app.get("/", (req, res) => {
     .catch((err: any) => {
       console.log(err);
     });
-  res.sendFile(path.join(__dirname, "build", "index.html"));
 });
 app.listen(port, () => console.log(`App listening on port ${port}!`));

@@ -47,13 +47,10 @@ a {
     margin: 5px 0;
 }
 
-.word {
-
-}
-
 .word__section {
     display: flex;
     flex-direction: column;
+    flex-wrap: wrap;
     align-items: center;
     justify-content: center;
 }

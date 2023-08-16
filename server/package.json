@@ -5,6 +5,7 @@
   "main": "app.tsx",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
+    "build": "npm i",
     "start": "npx tsx index.tsx"
   },
   "keywords": [],
