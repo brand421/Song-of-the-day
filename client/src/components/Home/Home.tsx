@@ -12,7 +12,7 @@ function Home() {
   });
 
   useEffect(() => {
-    fetch("http://localhost:8000/")
+    fetch("https://song-of-the-day.onrender.com/")
       .then((res) => res.json())
       .then((data) => setMessage(data));
   }, []);
