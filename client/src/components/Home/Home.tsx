@@ -51,7 +51,9 @@ function Home() {
             alt={`Album cover for ${message.songAlbum}`}
           />
         </a>
-        <h3>Click on the album cover to open the song in Spotify!</h3>
+        <h3 className="album__command">
+          Click on the album cover to open the song in Spotify!
+        </h3>
       </div>
       <div className="footer">
         <p className="disclaimer">

@@ -49,10 +49,13 @@ a {
 
 .word__section {
     display: flex;
-    flex-direction: column;
     flex-wrap: wrap;
-    align-items: center;
-    justify-content: center;
+    text-align: center;
+    margin: auto 5%;
+}
+
+.album__command {
+    text-align: center;
 }
 
 .footer {
@@ -65,6 +68,7 @@ a {
 .disclaimer {
     font-size: small;
     margin: 10% 0 0 0;
+    text-align: center;
 }
 
 .github {
@@ -76,4 +80,36 @@ a {
     text-decoration: underline;
     color: black;
     margin: 0;
+}
+
+@media screen and (max-width: 950px) {
+
+    img {
+        width: 150px;
+        height: 150px;
+    }
+    .home__container {
+        margin-top: 2%;
+    }
+
+    .title__head {
+        font-size: large;
+    }
+
+    .word__section {
+        font-size: small;
+        margin-bottom: 0;
+    }
+
+    .song__item {
+        margin: 0;
+    }
+
+    .album__command {
+        margin: 0;
+    }
+
+    .song__info {
+        margin-top: 0;
+    }
 }
