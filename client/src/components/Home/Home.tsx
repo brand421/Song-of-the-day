@@ -53,6 +53,21 @@ function Home() {
         </a>
         <h3>Click on the album cover to open the song in Spotify!</h3>
       </div>
+      <div className="footer">
+        <p className="disclaimer">
+          If the data doesn't load, wait about a minute and reload the page
+        </p>
+        <p className="github">
+          <a
+            href="https://github.com/brand421/Song-of-the-day"
+            target="_blank"
+            rel="noreferrer"
+            className="github__link"
+          >
+            Check out the code at my github
+          </a>
+        </p>
+      </div>
     </div>
   );
 }

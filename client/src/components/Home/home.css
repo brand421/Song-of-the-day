@@ -54,3 +54,26 @@ a {
     align-items: center;
     justify-content: center;
 }
+
+.footer {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+}
+
+.disclaimer {
+    font-size: small;
+    margin: 10% 0 0 0;
+}
+
+.github {
+    font-size: small;
+    margin: 0;
+}
+
+.github__link {
+    text-decoration: underline;
+    color: black;
+    margin: 0;
+}
