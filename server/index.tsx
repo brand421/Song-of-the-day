@@ -15,17 +15,21 @@ const port = process.env.PORT;
 const endpoint = process.env.SPOTIFY_ENDPOINT;
 const wordnikApi = process.env.WORDNIK_API;
 
-// app.post("/", (req, res) => {
-//   let word =
-// });
+app.post("/:date", (req, res) => {
+  let date = req.query.date;
+  console.log(date);
+  res.send(date);
+});
 
 app.get("/", (req, res) => {
-  let date = req.body.date;
+  let info = req.body;
+  let date = info.date;
   let word =
     "https://api.wordnik.com/v4/words.json/wordOfTheDay?date=" +
     date +
     "&api_key=" +
     wordnikApi;
+  console.log(date);
   let spotifyApi = new SpotifyWebApi({
     clientId: process.env.SPOTIFY_ID,
     clientSecret: process.env.SPOTIFY_SECRET
@@ -38,7 +42,7 @@ app.get("/", (req, res) => {
       //console.log("the access token is " + data.body["access_token"]); using the searchTracks function and returns only 1 song to save on response time.
       spotifyApi.setAccessToken(data.body["access_token"]);
 
-      return spotifyApi.searchTracks("patagium", { limit: 1 });
+      return spotifyApi.searchTracks(word, { limit: 1 });
     })
     .then(function (data: any) {
       var uriTrack = data.body["tracks"]["items"][0]["name"];
