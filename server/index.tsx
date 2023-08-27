@@ -44,16 +44,19 @@ app.get("/", (req, res) => {
           var uriArtist = data.body["tracks"]["items"][0]["artists"][0]["name"];
           var uriCover =
             data.body["tracks"]["items"][0]["album"]["images"][0]["url"];
+          var uriAlbum = data.body["tracks"]["items"][0]["album"]["name"];
           var uriLink = data.body["tracks"]["items"][0]["uri"];
 
           res.json({
             songName: uriTrack,
             songArtist: uriArtist,
             songAlbum: uriCover,
+            albumName: uriAlbum,
             songLink: uriLink,
             word: word,
             definition: wordDefinition
           });
+          console.log(uriAlbum);
         });
     })
     .catch((err: any) => {

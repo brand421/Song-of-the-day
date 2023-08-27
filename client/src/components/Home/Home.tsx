@@ -6,6 +6,7 @@ function Home() {
     songName: "",
     songArtist: "",
     songAlbum: "",
+    albumName: "",
     songLink: "",
     word: "",
     definition: ""
@@ -48,9 +49,10 @@ function Home() {
             src={message.songAlbum}
             height={200}
             width={200}
-            alt={`Album cover for ${message.songAlbum}`}
+            alt={`Album cover for ${message.albumName}`}
           />
         </a>
+        <h4>Album name: {message.albumName}</h4>
         <h3 className="album__command">
           Click on the album cover to open the song in Spotify!
         </h3>
